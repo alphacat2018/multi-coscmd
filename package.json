@@ -1,6 +1,7 @@
 {
+    "homepage": "https://github.com/alphacat2018/multi-coscmd.git",
     "name": "multi-coscmd",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "支持本地同时存在多个coscmd的配置，并在使用时自动切换到对应的配置",
     "main": "index.js",
     "scripts": {
@@ -14,7 +15,8 @@
     ],
     "author": "alphacat",
     "license": "ISC",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alphacat2018/multi-coscmd.git"
     }
 }
