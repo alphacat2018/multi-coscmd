@@ -1,0 +1,32 @@
+#!/bin/bash
+
+COLOR_RED=`tput setaf 1`
+COLOR_GREEN=`tput setaf 2`
+COLOR_YELLOW=`tput setaf 3`
+COLOR_RESET=`tput sgr0`
+
+COSCMD_ORIGINAL_FILE_PATH=$(which coscmd)
+COSCMD_ORIGINAL_FILE_FOLDER_PATH=${COSCMD_ORIGINAL_FILE_PATH%/*}
+COSCMD_ORIGINAL_FILE_NEW_PATH="$COSCMD_ORIGINAL_FILE_FOLDER_PATH/__coscmd"
+COSCMD_OVERRIDE_FILE_PATH="./coscmd-override.sh"
+COSCMD_CURRENT_CONFIG_FILE_PATH=~/.cos.conf
+COSCMD_COMPLETE_CONFIG_FILE_PATH=~/.cos.conf.all
+
+cwd=$(cd $(dirname $0);pwd)
+cd $cwd
+
+# init ~/.cos.conf.all with ~/.cos.conf
+if [[ ! -f "$COSCMD_COMPLETE_CONFIG_FILE_PATH" ]] && [[ -f "$COSCMD_CURRENT_CONFIG_FILE_PATH" ]]; then
+    sudo cp $COSCMD_CURRENT_CONFIG_FILE_PATH $COSCMD_COMPLETE_CONFIG_FILE_PATH
+    echo "${COLOR_GREEN}${COSCMD_COMPLETE_CONFIG_FILE_PATH} created.${COLOR_RESET}"
+fi
+
+if [[ ! -f "$COSCMD_ORIGINAL_FILE_NEW_PATH" ]]; then
+    sudo mv $COSCMD_ORIGINAL_FILE_PATH $COSCMD_ORIGINAL_FILE_NEW_PATH
+    echo "${COLOR_GREEN}rename ${COSCMD_ORIGINAL_FILE_PATH} ==> ${COSCMD_ORIGINAL_FILE_NEW_PATH}.${COLOR_RESET}"
+fi
+
+# override original coscmd script with new script
+sudo cp $COSCMD_OVERRIDE_FILE_PATH $COSCMD_ORIGINAL_FILE_PATH
+sudo chmod +x $COSCMD_ORIGINAL_FILE_PATH
+echo "${COLOR_GREEN}multi-coscmd initalization finished.${COLOR_RESET}"

@@ -1,0 +1,20 @@
+{
+    "name": "multi-coscmd",
+    "version": "1.0.5",
+    "description": "支持本地同时存在多个coscmd的配置，并在使用时自动切换到对应的配置",
+    "main": "index.js",
+    "scripts": {
+        "postinstall": "sh ./scripts/setup.sh"
+    },
+    "keywords": [
+        "coscmd",
+        "multi",
+        "config",
+        ".cos.conf"
+    ],
+    "author": "alphacat",
+    "license": "ISC",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    }
+}
