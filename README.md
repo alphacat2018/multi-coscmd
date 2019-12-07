@@ -14,6 +14,20 @@ sudo npm install -g multi-coscmd --unsafe
 * 其他使用`-b`指定桶的操作: 如果`~/.cos.conf.all`中存在指定桶的配置则会先将`~/.cos.conf`切换到对应的配置，然后再继续原有操作。
 
 # 使用方式
-基本与直接使用coscmd一样，另外添加了以下操作:
+因为只是添加了hook，所以与直接使用coscmd一样，另外添加了以下操作:
 * `coscmd -a`: 输出`~/.cos.conf.all`文件内容到控制台
 * `coscmd reset`: 删除所有的hook以及其他附加操作，但是`~/.cos.conf.all`文件会保留
+
+```
+// 可以连续配置多个桶
+coscmd config -a SECRET_ID -s SECRET_KEY -b bucket1-beijing -r ap-beijing
+coscmd config -a SECRET_ID -s SECRET_KEY -b bucket2-hongkong -r ap-hongkong
+
+// 会打印上述两个配置
+coscmd -a
+
+// 以后就可以直接使用-b指定不同的桶进行文件操作
+coscmd -b bucket1-beijing upload exampleobject exampleobject
+coscmd -b bucket2-hongkong upload exampleobject exampleobject
+
+```
