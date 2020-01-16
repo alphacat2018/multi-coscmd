@@ -38,12 +38,16 @@ else
             fi
             exit
         else
-            if [[ $(cat "$COMPLETE_COS_CONFIG_PATH") =~ "$bucket" ]]; then
-                echo "${COLOR_YELLOW}正在切换配置到[${bucket}]${COLOR_RESET}"
-                cat $COMPLETE_COS_CONFIG_PATH | tr '\n' '\t' | sed -E 's/.*(\[[^\[]+'$bucket'[^\[]+).*/\1/' | tr '\t' '\n' | xargs -I {} echo {} > $USER_COS_CONFIG_PATH
-            else
-                echo "${COLOR_RED}${COMPLETE_COS_CONFIG_PATH}中[${bucket}]的配置不存在,将继续使用以下配置${COLOR_RESET}"
-                cat $USER_COS_CONFIG_PATH
+            # 检查~/.cos.conf中的当前配置是否是指定桶的配置
+            if [[ ! $(cat "$USER_COS_CONFIG_PATH") =~ "$bucket" ]]; then
+                # 检查~/.cos.conf.all中是否存在指定桶的配置
+                if [[ $(cat "$COMPLETE_COS_CONFIG_PATH") =~ "$bucket" ]]; then
+                    echo "${COLOR_YELLOW}正在切换配置到[${bucket}]${COLOR_RESET}"
+                    cat $COMPLETE_COS_CONFIG_PATH | tr '\n' '\t' | sed -E 's/.*(\[[^\[]+'$bucket'[^\[]+).*/\1/' | tr '\t' '\n' | xargs -I {} echo {} > $USER_COS_CONFIG_PATH
+                else
+                    echo "${COLOR_RED}${COMPLETE_COS_CONFIG_PATH}中[${bucket}]的配置不存在,将继续使用以下配置${COLOR_RESET}"
+                    cat $USER_COS_CONFIG_PATH
+                fi
             fi
         fi
     fi

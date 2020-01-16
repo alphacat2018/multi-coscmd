@@ -1,7 +1,7 @@
 {
     "homepage": "https://github.com/alphacat2018/multi-coscmd.git",
     "name": "multi-coscmd",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "支持本地同时存在多个coscmd的配置，并在使用时自动切换到对应的配置",
     "main": "index.js",
     "scripts": {
